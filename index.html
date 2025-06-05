@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="shortcut icon" href="public/img/Weatherdark.webp" type="image/x-icon">
+    <link rel="stylesheet" href="./src/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wheather App</title>
+  </head>
+  <body>
+    <header class="flex flex-col items-center bg-slate-400">
+    <div class="w-full flex font-inter justify-between px-5 pt-3">
+        <button class="text-black"><svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z"/></svg></button>
+        <div class="text-center"><i></i><h2 class="ele">Location<p>Monday, 1 January 9:00</p></h2></div>
+        <button class="text-4xl">+</button>
+    </div>
+    <input class="mt-5 mb-3 border rounded-full px-2 py-1 z-20" type="text" placeholder="Search">
+     </header>
+     <main class="h-screen flex flex-col items-center bg-slate-500">
+      <section class="h-[300px] flex flex-col items-center relative">
+        <svg class="size-60 absolute -top-8 z-10">
+          <use href="/public/svg/sprite.svg#wi-cloud"></use>
+        </svg>
+        <h1 class="text-[10rem] font-inter absolute top-30">22</h1>
+        <h1 class="text-5xl font-inter absolute top-45 -right-28">°</h1>
+       
+      </section>
+      <section class="py-5 flex justify-center items-center">
+      
+        <h2 class="text-2xl">cloudy</h2>
+        
+      </section>
+
+     </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
