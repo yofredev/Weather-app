@@ -14,8 +14,8 @@ export function getWheather(lat,lon){
     })
     .then(data => {
         if(data.length === 0 ) throw new Error(`Ciudad no encontrada`)
-        const {weather,main} = data
-        return {weather, main}
+        const {weather,main,wind} = data
+        return {weather, main,wind}
         } )
 
 }

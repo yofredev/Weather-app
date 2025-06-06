@@ -1,5 +1,4 @@
 const API_KEY = `2da6f5c51cefd8e4d5bca21dbc5e3a9d`;
-export const timeStamp = Math.floor(Date.now() / 1000);
 
 
 export function getCoordinates(encodedCity){
