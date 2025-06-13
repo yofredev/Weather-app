@@ -1,6 +1,6 @@
 export class Weather{
-    constructor({city,weatherName,weatherType,weatherIcon,temp,tempMax,tempMin,feelsLikeTemp,windSpeed}){
-        this._city = city;
+    constructor({locationData,weatherName,weatherType,weatherIcon,temp,tempMax,tempMin,feelsLikeTemp,windSpeed}){
+        this._locationData = locationData;
         this._weatherName = weatherName;
         this._weatherType = weatherType;
         this._weatherIcon = weatherIcon;

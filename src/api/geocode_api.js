@@ -14,7 +14,6 @@ export function getCoordinates(encodedCity){
 .then(data => {
     if(data.length === 0) throw new Error('ciudad no encontrada')
     const {lat,lon} = data[0]
-    console.log({lat:lat},{lon:lon});
     
     return { lat, lon }
 }) 
