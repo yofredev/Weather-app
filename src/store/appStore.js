@@ -1,116 +1,146 @@
+//@ts-nocheck
 import { getLocation } from "/src/api/geolotion_api";
 import { Weather } from "/src/model/weatherData";
 import { parseWeatherFetch } from "../utils/parseWeather";
 import { parserOpencafetch } from "../utils/parseOpencagedata";
 import { getCoordinates } from "../api/geocode_api";
+import { getWheather } from "../api/wheather_api";
 
 
 
 
 export class Store {
-    static instance 
+    static instance
+    #currentWeather;
+    #defaultLocation;
        constructor(){
         if(!!Store.instance){
             return Store.instance
         }
         Store.instance = this
-        this.currentWeather = null
-        this.defaultLocation = 
+        this.#currentWeather = null
+        this.#defaultLocation = 
         {city:'London',
         country:'United Kingdom',
         continent:`Europe`
         }
-        this.location = null
     }
-    get getlocation(){
-       return this.location
-    }
-    set setlocation(location){
-        this.location = location
-    }
-    get GetWeather(){
-        return this.currentWeather
+    get currentWeather(){
+        return this.#currentWeather
      }
-     set setWeather(value){
-         this.currentWeather = value
+     set currentWeather(value){
+         this.#currentWeather = value
      }
-        setDefaultWeather(){
-            return new Promise((resolve)=>{
+      async setDefaultWeather(){
 
-                getCoordinates(this.defaultLocation.city).then(
-                    location =>{ 
-                    parseWeatherFetch(location.lat,location.lon).then(
-                        weatherData =>{
-                        const {weatherName,weatherType,weatherIcon,windSpeed,temp,feelsLikeTemp,tempMin,tempMax} = weatherData
-                        console.log(weatherName,weatherType,weatherIcon,windSpeed,temp,feelsLikeTemp,tempMin,tempMax)
-                        this.setWeather = new Weather({locationData:this.defaultLocation,weatherName,weatherType,weatherIcon,windSpeed,temp,feelsLikeTemp,tempMin,tempMax})
-                            resolve(this.currentWeather);
-                            
-                    }
-                    )
-                    }
-                )
-            })
-        
-    }
-    loadWeather(){
-        return new Promise((resolve)=>{
-        Promise.all([parseWeatherFetch(this.location.lat, this.location.lon),parserOpencafetch(this.location.lat,this.location.lon)]).then(
-            ([weatherData,opencagedata]) => {
-                
-                const {weatherName,weatherType,weatherIcon,windSpeed,temp,feelsLikeTemp,tempMin,tempMax} = weatherData
-                this.setWeather = new Weather({locationData: opencagedata,weatherName,weatherType,weatherIcon,windSpeed,temp,feelsLikeTemp,tempMin,tempMax})
-                resolve(this.currentWeather)
-
-            }
-        )          
-    }    
-)
-}
-locationWeather(){
-    return new Promise((resolve)=>{
-
-        getLocation().then(
-            location =>{
-                console.log(location)
-                
-                Promise.all([parseWeatherFetch(location.latitude,location.longitude),parserOpencafetch(location.latitude,location.longitude)]).then(
-                    ([weatherData,opencagedata]) => {
+     try{          
+                  const location = await getCoordinates(this.#defaultLocation.city)
+                    
+                  const weatherData = await parseWeatherFetch(location.lat,location.lon)
                         
                         const {weatherName,weatherType,weatherIcon,windSpeed,temp,feelsLikeTemp,tempMin,tempMax} = weatherData
-                        this.setWeather = new Weather({locationData: opencagedata,weatherName,weatherType,weatherIcon,windSpeed,temp,feelsLikeTemp,tempMin,tempMax})
-                        resolve(this.currentWeather)
+                        console.log(weatherName,weatherType,weatherIcon,windSpeed,temp,feelsLikeTemp,tempMin,tempMax)
+                        this.currentWeather = new Weather({locationData:this.#defaultLocation,weatherName,weatherType,weatherIcon,windSpeed,temp,feelsLikeTemp,tempMin,tempMax})
+                           
+                           
+   
+                        return this.currentWeather
+            }        
+    catch(error){
+        console.Error(`error setting default weather`,error)
+        throw new Error(`failed to set default weather`)
+    }
+
+    }
+    async loadWeather(){
+        try {
+            
+            const [weatherData,opencagedata] = await Promise.all([
+                parseWeatherFetch(this.location.lat, this.location.lon),
+                parserOpencafetch(this.location.lat,this.location.lon)])
+               
+                    
+                    const {weatherName,
+                           weatherType,
+                           weatherIcon,
+                           windSpeed,
+                           temp,
+                           feelsLikeTemp,
+                           tempMin,
+                           tempMax} = weatherData
+                    this.currentWeather = new Weather({locationData: opencagedata,
+                                                   weatherName,
+                                                   weatherType,
+                                                   weatherIcon,
+                                                   windSpeed,
+                                                   temp,
+                                                   feelsLikeTemp,
+                                                   tempMin,
+                                                   tempMax})
+                    
+    
+                
+                  
+            console.log(this.currentWeather);
+            
+            return this.currentWeather   
         
-                    })
-            }
-        )
-    })
+        } catch (error) {
+            console.error(`error loading weather`,error)
+            throw new Error(`failed to load weather`)
+        }
 }
-initControl(){
-   return new Promise((resolve) =>{    navigator.permissions.query({ name: 'geolocation' })
-        .then((result) => {
-        if (result.state === 'granted') {
-            this.locationWeather().then(weather =>{
-                resolve(weather)
-            })
-        } else if (result.state === 'prompt') {
-            this.setDefaultWeather().then(
-                weather => resolve(weather) 
-              )    
+async locationWeather(){
+    
+
+              try{  const location = await getLocation()
           
-        } else if (result.state === 'denied') {
+                const [weatherData,opencagedata] = await Promise.all([parseWeatherFetch(location.latitude,location.longitude),
+                    parserOpencafetch(location.latitude,location.longitude)])
+                    
+                        
+                        const {weatherName,weatherType,weatherIcon,windSpeed,temp,feelsLikeTemp,tempMin,tempMax} = weatherData
+                        this.currentWeather = new Weather({locationData: opencagedata,weatherName,weatherType,weatherIcon,windSpeed,temp,feelsLikeTemp,tempMin,tempMax})
+                        console.log(this.currentWeather);
+                        
+                        return this.currentWeather
+        }catch(error){
+            console.error(`error loading location weather`,error)
+            throw new Error(`failed to load location weather`)
+        }
+                   
+}
+        
+    
+async initControl(){
+  
+    try{const result = await navigator.permissions.query({ name: 'geolocation' })
+        
+        if (result.state === 'granted'){
+           const weather = await this.locationWeather()
+                return weather
+            }
+        
+        else if (result.state === 'prompt') {
+            const weather = await this.setDefaultWeather()
+            return weather
+        }
+        else if (result.state === 'denied') {
           console.warn('Permiso denegado');
-          this.setDefaultWeather().then(
-            weather =>
-             { console.log(weather);
-             resolve(weather)
+          const weather = await this.setDefaultWeather()
+            console.log(weather);
+            
+             return weather
              }
-          )
+          }catch(error){
+            console.error(`error init control`,error)
+            throw new Error(`failed to init controller`)
+          }
           
         }
-      });})
+      
 }
-}
+
 
 
 

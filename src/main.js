@@ -1,3 +1,4 @@
+//@ts-nocheck
 
     import {Store} from "./store/appStore"
     import { getInputValue } from "./events/search_input"

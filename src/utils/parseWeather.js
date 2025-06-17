@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import {getWheather} from "/src/api/wheather_api"
 
 

@@ -1,3 +1,4 @@
+//@ts-nocheck
 export class Weather{
     constructor({locationData,weatherName,weatherType,weatherIcon,temp,tempMax,tempMin,feelsLikeTemp,windSpeed}){
         this._locationData = locationData;

@@ -1,3 +1,4 @@
+//@ts-nocheck
 const API_KEY = `2da6f5c51cefd8e4d5bca21dbc5e3a9d`;
 
 

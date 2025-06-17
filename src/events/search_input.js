@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { getCoordinates } from "../api/geocode_api";
 
 export function getInputValue(input,callback){
