@@ -1,15 +1,14 @@
-
-export const getLocation = () => {
-    return new Promise((resolve, reject) => {
+//@ts-nocheck
+export const getLocation = async () => {
+    
         if(!navigator.geolocation){
-            reject(
-                new Error("Geolocation is not supported by your browser"))
+            
+                new Error("Geolocation is not supported by your browser")
         }
-        navigator.geolocation.getCurrentPosition(position => {
-            const {latitude,longitude} = position.coords
-            resolve({latitude,longitude})
-        },error => {
-            reject(error)
+        const position = await new Promise((resolve,reject)=>{
+            navigator.geolocation.getCurrentPosition(resolve,reject)
         })
-    })
+            const {latitude,longitude} = position.coords
+            return {latitude,longitude}
+      
 }
