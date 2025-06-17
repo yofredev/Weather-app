@@ -13,6 +13,7 @@ export class Store {
     static instance
     #currentWeather;
     #defaultLocation;
+    #location;
        constructor(){
         if(!!Store.instance){
             return Store.instance
@@ -24,7 +25,15 @@ export class Store {
         country:'United Kingdom',
         continent:`Europe`
         }
+        this.#location = null
     }
+    get location(){
+       return this.#location
+    }
+    set setlocation(location){
+        this.#location = location
+    }
+    
     get currentWeather(){
         return this.#currentWeather
      }
