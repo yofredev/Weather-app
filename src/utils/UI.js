@@ -2,10 +2,11 @@
 //@ts-nocheck
 
 export class UI {
-    renderWeather(tempC){
+    renderWeather(tempValue,locationValue){
         const temp = document.querySelector(`.temp`)
-        console.log(tempC)
-        temp.innerHTML = tempC
+        const location = document.querySelector(`.location`)
+        temp.innerHTML = tempValue
+        location.innerHTML = locationValue
 
     }
 }

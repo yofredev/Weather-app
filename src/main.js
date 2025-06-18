@@ -1,5 +1,5 @@
 //@ts-nocheck
-
+    import {parseWeatherForecast} from "./utils/parseWeatherForecast"
     import {Store} from "./store/appStore"
     import { getInputValue } from "./events/search_input"
     import { UI } from "./utils/UI"
@@ -13,7 +13,7 @@
         weather => {
             let tempe = weather.tempC
             
-            ui.renderWeather(tempe)}
+            ui.renderWeather(tempe,`london`)}
     )
  
 
@@ -25,7 +25,14 @@
         
         storeNew.setlocation = getInputValue(SearchInput,(data)=>{
             const {lat,lon} = data
+
+             parseWeatherForecast(lat,lon).then( data =>{
+                console.log(data);
+                
+             })
+             
             storeNew.setlocation = {lat,lon}
+                      
             console.log(storeNew.location)
         storeNew.loadWeather().then(weather => ui.renderWeather(weather.tempC))
         })
