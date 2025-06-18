@@ -1,5 +1,5 @@
 //@ts-nocheck
-    import {parseWeatherForecast} from "./utils/parseWeatherForecast"
+    import { weatherForecastDaily } from "./utils/weatherForecastDaily"
     import {Store} from "./store/appStore"
     import { getInputValue } from "./events/search_input"
     import { UI } from "./utils/UI"
@@ -26,7 +26,7 @@
         storeNew.setlocation = getInputValue(SearchInput,(data)=>{
             const {lat,lon} = data
 
-             parseWeatherForecast(lat,lon).then( data =>{
+             weatherForecastDaily(lat,lon).then( data =>{
                 console.log(data);
                 
              })
