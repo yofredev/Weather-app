@@ -5,7 +5,7 @@ import { parseWeatherFetch } from "../utils/parseWeather";
 import { parserOpencafetch } from "../utils/parseOpencagedata";
 import { getCoordinates } from "../api/geocode_api";
 import { getWheather } from "../api/wheather_api";
-
+import { weatherForecastDaily } from "../utils/weatherForecastDaily";
 
 
 
@@ -46,10 +46,12 @@ export class Store {
                   const location = await getCoordinates(this.#defaultLocation.city)
                     
                   const weatherData = await parseWeatherFetch(location.lat,location.lon)
-                        
+                  const weatherForecastDaily = await  weatherForecastDaily(location.lat,location.lon)  
+
                         const {weatherName,weatherType,weatherIcon,windSpeed,temp,feelsLikeTemp,tempMin,tempMax} = weatherData
+                         
                         console.log(weatherName,weatherType,weatherIcon,windSpeed,temp,feelsLikeTemp,tempMin,tempMax)
-                        this.currentWeather = new Weather({locationData:this.#defaultLocation,weatherName,weatherType,weatherIcon,windSpeed,temp,feelsLikeTemp,tempMin,tempMax})
+                        this.currentWeather = new Weather({locationData:this.#defaultLocation,weatherName,weatherType,weatherIcon,windSpeed,temp,feelsLikeTemp,tempMin,tempMax,weatherForecastDaily})
                            
                            
    
@@ -64,9 +66,10 @@ export class Store {
     async loadWeather(){
         try {
             
-            const [weatherData,opencagedata] = await Promise.all([
+            const [weatherData,opencagedata,weatherForecastDaily5] = await Promise.all([
                 parseWeatherFetch(this.location.lat, this.location.lon),
-                parserOpencafetch(this.location.lat,this.location.lon)])
+                parserOpencafetch(this.location.lat,this.location.lon),  
+                weatherForecastDaily(this.location.lat,this.location.lon)])
                
                     
                     const {weatherName,
@@ -85,7 +88,7 @@ export class Store {
                                                    temp,
                                                    feelsLikeTemp,
                                                    tempMin,
-                                                   tempMax})
+                                                   tempMax,weatherForecastDaily:weatherForecastDaily5})
                     
     
                 
@@ -102,17 +105,15 @@ export class Store {
 async locationWeather(){
     
 
-              try{  const location = await getLocation()
-          
-                const [weatherData,opencagedata] = await Promise.all([parseWeatherFetch(location.latitude,location.longitude),
-                    parserOpencafetch(location.latitude,location.longitude)])
-                    
-                        
-                        const {weatherName,weatherType,weatherIcon,windSpeed,temp,feelsLikeTemp,tempMin,tempMax} = weatherData
-                        this.currentWeather = new Weather({locationData: opencagedata,weatherName,weatherType,weatherIcon,windSpeed,temp,feelsLikeTemp,tempMin,tempMax})
-                        console.log(this.currentWeather);
-                        
-                        return this.currentWeather
+              try{  
+                const location = await getLocation()
+                const {latitude:lat,longitude:lon} = location
+                
+                this.setlocation = {lat,lon}
+                 const weather = this.loadWeather()
+                return weather
+                
+                
         }catch(error){
             console.error(`error loading location weather`,error)
             throw new Error(`failed to load location weather`)
@@ -126,6 +127,7 @@ async initControl(){
     try{const result = await navigator.permissions.query({ name: 'geolocation' })
         
         if (result.state === 'granted'){
+            
            const weather = await this.locationWeather()
                 return weather
             }

@@ -1,6 +1,6 @@
 //@ts-nocheck
 export class Weather{
-    constructor({locationData,weatherName,weatherType,weatherIcon,temp,tempMax,tempMin,feelsLikeTemp,windSpeed}){
+    constructor({locationData,weatherName,weatherType,weatherIcon,temp,tempMax,tempMin,feelsLikeTemp,windSpeed,weatherForecastDaily}){
         this._locationData = locationData;
         this._weatherName = weatherName;
         this._weatherType = weatherType;
@@ -10,6 +10,7 @@ export class Weather{
         this._tempMinK = tempMin;
         this._feelsLikeTempK = feelsLikeTemp;
         this._windSpeed = windSpeed;
+        this._weatherForecastDaily5 = weatherForecastDaily;
     }  
     get tempC(){
         return Math.floor(this._tempK - 273.15)

@@ -12,8 +12,8 @@
     storeNew.initControl().then(
         weather => {
             let tempe = weather.tempC
-            
-            ui.renderWeather(tempe,`london`)}
+            let location = `${weather._locationData.city}, ${weather._locationData.country}/${weather._locationData.continent}`
+            ui.renderWeather(tempe,location)}
     )
  
 
