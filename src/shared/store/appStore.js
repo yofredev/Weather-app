@@ -1,11 +1,11 @@
 //@ts-nocheck
-import { getLocation } from "/src/api/geolotion_api";
-import { Weather } from "/src/model/weatherData";
+import { getLocation } from "/src/features/location/services/geolotion_api";
+import { Weather } from "/src/shared/models/weatherData";
 import { parseWeatherFetch } from "../utils/parseWeather";
-import { parserOpencafetch } from "../utils/parseOpencagedata";
-import { getCoordinates } from "../api/geocode_api";
+import { parserOpencafetch } from "/src/features/location/services/parseOpencagedata.ts";
+import { getCoordinates } from "../../features/location/services/geocode_api";
 import { getWheather } from "../api/wheather_api";
-import { parseWeatherForecast } from "../utils/parseWeatherForecast";
+import { parseWeatherForecast } from "../../features/forecast/services/parseWeatherForecast";
 
 export class Store {
   static instance;
@@ -79,7 +79,7 @@ export class Store {
         feelsLikeTemp,
         tempMin,
         tempMax,
-        weatherForecast:weatherForecastData,
+        weatherForecast: weatherForecastData,
       });
 
       return this.currentWeather;
@@ -117,7 +117,7 @@ export class Store {
         feelsLikeTemp,
         tempMin,
         tempMax,
-        weatherForecast:weatherForecastData,
+        weatherForecast: weatherForecastData,
       });
 
       console.log(this.currentWeather);

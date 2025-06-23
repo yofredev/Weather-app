@@ -4,3 +4,36 @@
 @theme{
   --font-inter: font-family: "Inter",sans-serif;
 }
+.dragging{
+  cursor: grab;
+}
+body{
+  overflow-x: hidden;
+}
+.swiper {
+  overflow-x: scroll; 
+  scrollbar-color: #666 transparent;
+  scrollbar-width: thin;
+}
+.scrollable::-webkit-scrollbar {
+  height: 6px; 
+}
+
+
+.scrollable::-webkit-scrollbar-track {
+  background: transparent; 
+}
+
+
+.scrollable::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 3px;
+}
+
+
+.scrollable::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+.swiper::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}

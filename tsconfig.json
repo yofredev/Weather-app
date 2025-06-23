@@ -1,17 +1,44 @@
 {
-    "compilerOptions": {
-      "target": "ESNext",
-      "module": "ESNext",
-      "moduleResolution": "node",
-      "allowJs": true,
-      "checkJs": true,
-      "noEmit": true,
-      "strict": true,
-      "esModuleInterop": true,
-      "forceConsistentCasingInFileNames": true,
-      "skipLibCheck": true
-    },
-    "include": ["src/**/*"],
-    "exclude": ["node_modules"]
-  }
-  
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "src/**/*",
+    "src/features/forecast/services/parseForecastData.js",
+    "src/features/forecast/services/parseWeatherForecast.js",
+    "src/features/forecast/utils/calculateForecastDailyTempMinMax.js",
+    "src/features/forecast/services/forecastControl.js",
+    "src/features/forecast/services/getDayTitleForecast.ts",
+    "src/features/forecast/services/weatherForecastDaily.js",
+    "src/features/temperature/utils/kelvinToFahrenheit .js",
+    "src/features/temperature/utils/kelvinToCelcius.js",
+    "src/features/temperature/utils/ChangeTempUnit.js",
+    "src/features/forecast/services/orderForecastDay.js",
+    "src/features/ui/components/UI.js",
+    "src/features/forecast/utils/builtWeatherIcon.js",
+    "src/features/forecast/utils/groupWeatherForecastDaily.js",
+    "src/shared/api/wheather_api.js",
+    "src/shared/utils/parseWeather.js",
+    "src/features/forecast/api/weather_forecast5_api.js",
+    "src/features/location/services/opencage_geocoding_api.js",
+    "src/features/location/services/geolotion_api.js",
+    "src/features/location/services/geocode_api.js",
+    "src/shared/models/weatherData.js",
+    "src/features/temperature/handlers/temperatureUnitControlValue.js",
+    "src/features/ui/handlers/scrollSwiper.js",
+    "src/features/ui/handlers/search_input.js",
+    "src/shared/store/appStore.js",
+    "src/app/main.js",
+    "src/app/init_app.js"
+  ],
+  "exclude": ["node_modules"]
+}

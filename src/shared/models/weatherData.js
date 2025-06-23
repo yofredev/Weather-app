@@ -11,21 +11,6 @@ export class Weather{
         this._feelsLikeTempK = feelsLikeTemp;
         this._windSpeed = windSpeed;
         this._weatherForecast = weatherForecast;
-    }  
-    get tempC(){
-        return Math.floor(this._tempK - 273.15)
-    }
-   
-    get tempMaxC(){
-        return Math.floor(this._tempMaxK - 273.15)
-    }
-    
-    get tempMinC(){
-        return Math.floor(this._tempMinK - 273.15)
-    }
-   
-    get feelsLikeTempC(){
-        return Math.floor(this._feelsLikeTempK - 273.15)
     }        
     }
 

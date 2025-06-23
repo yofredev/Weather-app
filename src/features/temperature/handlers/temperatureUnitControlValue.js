@@ -1,10 +1,11 @@
 //@ts-nocheck
 
-export function TemperatureUnitControl(select,callback){
+
+export function temperatureUnitControl(select){
 
     select.addEventListener(`change`,( event )=>{
         data.tempUnit = event.target.value 
-        console.log(data.tempUnit);
+        console.log(event.target.value);
         
     })
 

@@ -1,6 +1,6 @@
 //@ts-nocheck
 
-import {getWheather} from "/src/api/wheather_api"
+import {getWheather} from "/src/shared/api/wheather_api.js"
 
 
 export function parseWeatherFetch(lat,lon){

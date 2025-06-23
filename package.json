@@ -9,12 +9,14 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "prettier": "^3.6.0",
+    "prettier-plugin-tailwindcss": "^0.6.13",
     "typescript": "^5.8.3",
     "vite": "^6.3.5"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.8",
-    "lucide": "^0.515.0",
+    "chart.js": "^4.5.0",
     "nod": "^0.2.0",
     "node": "^22.16.0",
     "tailwindcss": "^4.1.8"
